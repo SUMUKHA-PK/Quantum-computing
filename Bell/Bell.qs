@@ -26,21 +26,35 @@
                 {
                     Set (initial, qubits[0]);
                     Set (Zero, qubits[1]);
-
+                    
                     H(qubits[0]);
-                    CNOT(qubits[0],qubits[1]);
-                    let res = M (qubits[0]);
-
-                    if (M (qubits[1]) == res) 
+                    if(M(qubits[0])==One)
                     {
-                        set agree = agree + 1;
+                        set numOnes = numOnes +1;
                     }
+                    H(qubits[1]);
+                    if(M(qubits[1])==One)
+                    {
+                        set numOnes = numOnes +1;
+                    }
+                    H(qubits[2]);
+                    //M(qubits[1]); 
+                    //H(qubits[1]);
+                    //H(qubits[2]);
+                    //CNOT(qubits[0],qubits[1]);
+                    //let res = M (qubits[0]);
+
+                    //if (M (qubits[1]) == res) 
+                    //{
+                    //    set agree = agree + 1;
+                    //}
 
                     // Count the number of ones we saw:
-                    if (res == One)
-                    {
-                        set numOnes = numOnes + 1;
-                    }
+                    //if (res == One)
+                    //{
+                    //    set numOnes = numOnes + 1;
+                    //}
+
                 }
 
                 Set(Zero, qubits[0]);

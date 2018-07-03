@@ -107,12 +107,6 @@ namespace Quantum.Bell
             set;
         }
 
-        protected IUnitary<(Qubit,Qubit)> MicrosoftQuantumPrimitiveCNOT
-        {
-            get;
-            set;
-        }
-
         protected IUnitary<Qubit> MicrosoftQuantumPrimitiveH
         {
             get;
@@ -156,33 +150,48 @@ namespace Quantum.Bell
 #line 30 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
                 MicrosoftQuantumPrimitiveH.Apply(qubits[0L]);
 #line 31 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
-                MicrosoftQuantumPrimitiveCNOT.Apply((qubits[0L], qubits[1L]));
-#line 32 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
-                var res = M.Apply(qubits[0L]);
-#line 34 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
-                if ((M.Apply(qubits[1L]) == res))
+                if ((M.Apply(qubits[0L]) == Result.One))
                 {
-#line 36 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
-                    agree = (agree + 1L);
-                }
-
-                // Count the number of ones we saw:
-#line 40 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
-                if ((res == Result.One))
-                {
-#line 42 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+#line 33 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
                     numOnes = (numOnes + 1L);
                 }
+
+#line 35 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+                MicrosoftQuantumPrimitiveH.Apply(qubits[1L]);
+#line 36 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+                if ((M.Apply(qubits[1L]) == Result.One))
+                {
+#line 38 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+                    numOnes = (numOnes + 1L);
+                }
+
+#line 40 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+                MicrosoftQuantumPrimitiveH.Apply(qubits[2L]);
+                //M(qubits[1]); 
+                //H(qubits[1]);
+                //H(qubits[2]);
+                //CNOT(qubits[0],qubits[1]);
+                //let res = M (qubits[0]);
+                //if (M (qubits[1]) == res) 
+                //{
+                //    set agree = agree + 1;
+                //}
+                // Count the number of ones we saw:
+                //if (res == One)
+                //{
+                //    set numOnes = numOnes + 1;
+                //}
+                ;
             }
 
-#line 46 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+#line 60 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
             Set.Apply((Result.Zero, qubits[0L]));
-#line 47 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+#line 61 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
             Set.Apply((Result.Zero, qubits[1L]));
 #line hidden
             Release.Apply(qubits);
             // Return number of times we saw a |0> and number of times we saw a |1>
-#line 50 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
+#line 64 "/home/some_guyy/pk/git/Quantum-computing/Bell/Bell.qs"
             return ((count - numOnes), numOnes, agree);
         }
 
@@ -190,7 +199,6 @@ namespace Quantum.Bell
         public override void Init()
         {
             this.Allocate = this.Factory.Get<Allocate>(typeof(Microsoft.Quantum.Primitive.Allocate));
-            this.MicrosoftQuantumPrimitiveCNOT = this.Factory.Get<IUnitary<(Qubit,Qubit)>>(typeof(Microsoft.Quantum.Primitive.CNOT));
             this.MicrosoftQuantumPrimitiveH = this.Factory.Get<IUnitary<Qubit>>(typeof(Microsoft.Quantum.Primitive.H));
             this.M = this.Factory.Get<ICallable<Qubit, Result>>(typeof(Microsoft.Quantum.Primitive.M));
             this.Release = this.Factory.Get<Release>(typeof(Microsoft.Quantum.Primitive.Release));
