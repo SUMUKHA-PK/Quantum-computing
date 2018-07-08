@@ -18,6 +18,7 @@
     {
         body
         {
+            let i =5;
             mutable numOnes = 0;
             mutable agree = 0;
             using (qubits = Qubit[2])
